@@ -15,13 +15,11 @@ public class ProdutoController {
 
     private final ProdutoRepository repository;
 
-    // GET /produtos
     @GetMapping
     public List<Produto> listarTodos() {
         return repository.findAll();
     }
 
-    // GET /produtos/{id}
     @GetMapping("/{id}")
     public ResponseEntity<Produto> buscarPorId(@PathVariable Long id) {
         return repository.findById(id)
@@ -29,14 +27,12 @@ public class ProdutoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // POST /produtos
     @PostMapping
     public ResponseEntity<Produto> criar(@RequestBody Produto produto) {
         Produto salvo = repository.save(produto);
         return ResponseEntity.status(201).body(salvo);
     }
 
-    // PUT /produtos/{id}
     @PutMapping("/{id}")
     public ResponseEntity<Produto> atualizar(@PathVariable Long id, @RequestBody Produto novo) {
         return repository.findById(id)
@@ -50,7 +46,6 @@ public class ProdutoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // DELETE /produtos/{id}
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         if (!repository.existsById(id)) return ResponseEntity.notFound().build();
